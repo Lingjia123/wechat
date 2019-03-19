@@ -39,6 +39,10 @@ app.use(async(req,res)=>{
             res.end("error");
         }
     }else if(req.method === 'POST'){
+        if(sha1Str !== signature){
+            res.end('error');
+            return;
+        }
      //获取用户发送的消息
        const xmlData = await new Promise((resolve,reject)=>{
           let xmlData = '';
@@ -65,16 +69,39 @@ app.use(async(req,res)=>{
         })
         //在拆解jsData 里面的数据, 去掉xml, 把属性值的数组变成字符串
         const {xml} = jsData;
-        let useDate = {};
+        let userData = {};
         for(let key in xml){
             const value = xml[key];
             //去掉数组
-            useData.key =value[0]
+           // useData.key =value[0]
+            userData[key] = value[0];
         }
         //创建自动回复内容
+        let content = '如果你是奇葩,你就扣1';
 
+        if(userData.Content === '1'){
 
-       res.send()
+            content = '恭喜你';
+
+        }else if (userData.Content.indexOf('2') !== -1) {
+
+            content = '你很棒!';
+        }
+        //创建模板字符串,发送的格式是xml, 返回的数据也是xml格式
+        //获取的属性名一定要跟请求的数据对应上
+        let MsgData = `<xml>
+        <ToUserName><![CDATA[${userData.FromUserName}]]></ToUserName>
+        <FromUserName><![CDATA[${userData.ToUserName}]]></FromUserName>
+        <CreateTime>${Date.now()}</CreateTime>
+        <MsgType><![CDATA[text]]></MsgType>
+        <Content><![CDATA[${content}]]></Content>
+        </xml>`
+        console.log(MsgData);
+        //响应数据
+
+       res.send(MsgData)
+    }else{
+        res.end('error')
     }
 });
 
