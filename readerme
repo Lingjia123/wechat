@@ -17,7 +17,7 @@
     timestamp: '1552966105',  微信后台发送请求的时间戳
     nonce: '1780047115' }     微信后台生成的随机数字
    */
-//消息自动回复
+//2,消息自动回复
   /*
           <xml>
           <ToUserName><![CDATA[gh_4fe7faab4d6c]]></ToUserName> 开发者微信测试号id
