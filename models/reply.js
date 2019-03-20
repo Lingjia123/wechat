@@ -2,6 +2,7 @@
 const sha1 = require('sha1');
 const {xmlMsg,parseData,formatJsData} = require('./Data.js');
 const template = require('./template');
+const response = require('./response');
 
 module.exports =()=>{
 
@@ -34,31 +35,7 @@ module.exports =()=>{
 
             const userData =formatJsData(jsData);
 
-            const options ={
-                toUserName: userData.FromUserName,
-                fromUserName: userData.ToUserName,
-                createTime: Date.now(),
-                type: 'text',
-                content: '如果你是奇葩,你就扣1'
-            };
-
-
-            //创建自动回复内容
-           // let content = '如果你是奇葩,你就扣1';
-
-           if(userData.MsgType === 'text'){
-               if(userData.Content === '1'){
-                   options.content = '恭喜你';
-                   //options.type = 'text';
-               }else if (userData.Content.indexOf('2') !== -1) {
-                   options.content = '你很棒!';
-                  // options.type = 'text';
-               }
-           }else if(userData.MsgType === 'image'){
-
-               options.mediaId = userData.MediaId;
-               options.type = 'image';
-           }
+            const options = response(userData);
 
             const MsgData = template(options);
 
