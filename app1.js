@@ -9,7 +9,7 @@ const reply = require('./models/reply');
 app.use(reply());
 
 //4, 监听端口号,启动服务器
-app.listen("3000",(err)=>{
+app.listen("4000",(err)=>{
 
     if (!err) console.log("服务器启动了!");
     else console.log(err)

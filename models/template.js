@@ -34,26 +34,10 @@ module.exports =(options)=>{
     <ThumbMediaId><![CDATA[${options.mediaId}]]></ThumbMediaId>
   </Music>`
     }else if(options.type === 'news'){
-       /* MsgData +=`
-   <ArticleCount>1</ArticleCount>
-   <Articles>
-    <item>
-      <Title><![CDATA[title1]]></Title>
-      <Description><![CDATA[description1]]></Description>
-      <PicUrl><![CDATA[picurl]]></PicUrl>
-      <Url><![CDATA[url]]></Url>
-    </item>
-  </Articles>`*/
+
         MsgData +=` <ArticleCount>${options.content.length}</ArticleCount>
 <Articles>`
- /*       MsgData += options.content.reduce((pre,curr)=> {
-            return pre +` <item>
-           <Title><![CDATA[${options.title}]]></Title>
-           <Description><![CDATA[${options.description}]]></Description>
-           <PicUrl><![CDATA[${options.picUrl}]]></PicUrl>
-           <Url><![CDATA[${options.Url}]]></Url>
-           </item>`
-},'');*/
+
         MsgData += options.content.reduce((pre,curr)=> {
             return pre +` <item>
            <Title><![CDATA[${curr.title}]]></Title>
