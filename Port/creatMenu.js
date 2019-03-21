@@ -118,6 +118,13 @@ async function batchUserTag(openid_list,tagid){
     return await rp({method:'POST',url,json:true,body:{openid_list,tagid}});
 }
 
+//设置用户备注名
+async function creatMark(openid,remark){
+    const {access_token} = await fetchAccessToken();
+    const url = `https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=${access_token}`;
+    return await rp({method:'POST',url,json:true,body:{openid,remark}})
+}
+
 //立即执行函数
 (async()=>{
    // let result = await DeleteMenu();
@@ -126,11 +133,13 @@ async function batchUserTag(openid_list,tagid){
    //  console.log(result);
    //  let result1 = await creatTag('小佳1');
    //  console.log(result1); //{ tag: { id: 100, name: '小佳' } }
-   let result2 = await getcreatTag();
-    console.log(result2);
-   let result3 = await getTagList(100);
-    console.log(result3);
-    let result4 =await batchUserTag(['oUkfA598b3bF1ILC1mL4wBwEQbnc'],100);
-    console.log(result4);
+   // let result2 = await getcreatTag();
+   //  console.log(result2);
+   // let result3 = await getTagList(100);
+   //  console.log(result3);
+   //  let result4 =await batchUserTag(['oUkfA598b3bF1ILC1mL4wBwEQbnc'],100);
+   //  console.log(result4);
+    let result5 =await creatMark('oUkfA561fwrRZzLD16ixum0nGZi4','同桌');
+    console.log(result5);
 })();
 
