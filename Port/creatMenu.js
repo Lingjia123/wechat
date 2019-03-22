@@ -2,6 +2,7 @@
 //实现微信公众号提供的各个接口
 const fetchAccessToken = require('./accessToken.js');
 const rp = require('request-promise-native');
+const URL_PREFIX = 'https://api.weixin.qq.com/cgi-bin/';
 
 const menu ={
     "button":[
@@ -73,7 +74,7 @@ async function creatMenu(){
     const {access_token} = await fetchAccessToken();
     //定义请求
     /*http请求方式：POST（请使用https协议） https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN*/
-    const url = `https://api.weixin.qq.com/cgi-bin/menu/create?access_token=${access_token}`;
+    const url = `${URL_PREFIX}menu/create?access_token=${access_token}`;
     //发请求
     const result = rp({method:'POST',url,json:true,body:menu},);
     //函数要return 才会有输出
@@ -84,7 +85,7 @@ async function DeleteMenu(){
     //获取accesstoken
     const {access_token} = await fetchAccessToken();
     //http请求方式：GET
-    const url = `https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=${access_token}`;
+    const url = `${URL_PREFIX}menu/delete?access_token=${access_token}`;
     const result = rp({method:'GET',url,json:true,},);
     return result;
 }
@@ -93,35 +94,35 @@ async function DeleteMenu(){
 async function creatTag(name){
     //获取accesstoken
     const {access_token} = await fetchAccessToken();
-    const url = `https://api.weixin.qq.com/cgi-bin/tags/create?access_token=${access_token}`;
+    const url = `${URL_PREFIX}tags/create?access_token=${access_token}`;
     return await rp({method:'POST',url,json:true,body:{tag:{name}}})
 }
 //2. 获取公众号已创建的标签
 async function getcreatTag(){
     //获取accesstoken
     const {access_token} = await fetchAccessToken();
-    const url = `https://api.weixin.qq.com/cgi-bin/tags/get?access_token=${access_token}`;
+    const url = `${URL_PREFIX}tags/get?access_token=${access_token}`;
     return await rp({method:'GET',url,json:true,});
 }
 //5. 获取标签下粉丝列表
 async function getTagList(tagid,next_openid=''){
     //获取accesstoken
     const {access_token} = await fetchAccessToken();
-    const url = `https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token=${access_token}`;
+    const url = `${URL_PREFIX}user/tag/get?access_token=${access_token}`;
     return await rp({method:'POST',url,json:true,body:{tagid,next_openid}});
 }
 //1. 批量为用户打标签
 async function batchUserTag(openid_list,tagid){
     //获取accesstoken
     const {access_token} = await fetchAccessToken();
-    const url = `https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=${access_token}`;
+    const url = `${URL_PREFIX}tags/members/batchtagging?access_token=${access_token}`;
     return await rp({method:'POST',url,json:true,body:{openid_list,tagid}});
 }
 
 //设置用户备注名
 async function creatMark(openid,remark){
     const {access_token} = await fetchAccessToken();
-    const url = `https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=${access_token}`;
+    const url = `${URL_PREFIX}user/info/updateremark?access_token=${access_token}`;
     return await rp({method:'POST',url,json:true,body:{openid,remark}})
 }
 

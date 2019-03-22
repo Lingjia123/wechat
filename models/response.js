@@ -1,5 +1,5 @@
 //回复内容模块
-
+const {url} = require('../config/config.js');
 module.exports =(userData)=>{
 
     const options ={
@@ -17,6 +17,8 @@ module.exports =(userData)=>{
         }else if (userData.Content.indexOf('2') !== -1) {
             options.content = '你很棒!';
 
+        }else if(userData.Content === '3'){
+            options.content = `<a href="${url}/search">语音识别页面</a>`;
         }
     }else if(userData.MsgType === 'image'){
 
